@@ -2875,12 +2875,12 @@
         observeMarkers() {
             if (this.marketObserverSet)
                 return;
-            this.addEventListener("items-changed", event => { this.updateMarkers(); });
+            this.addEventListener("selector-items-changed", event => { this.updateMarkers(); });
             this.marketObserverSet = true;
         }
         updateMarkers() {
             this.observeMarkers();
-            var markersSelector = this.shadowRoot.getElementById("selector-markers-selector");
+            var markersSelector = this.shadowRoot.getElementById("markers-selector");
             if (!markersSelector)
                 return;
             var newMarkers = markersSelector.items;
