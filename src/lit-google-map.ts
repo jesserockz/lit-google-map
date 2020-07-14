@@ -110,7 +110,7 @@ export class LitGoogleMap extends LitElement {
     updateMarkers() {
         this.observeMarkers();
 
-        var markersSelector = this.shadowRoot.getElementById("markers-selector") as LitSelector;
+        var markersSelector = this.shadowRoot.getElementById("selector-markers-selector") as LitSelector;
         if (!markersSelector)
             return;
 
