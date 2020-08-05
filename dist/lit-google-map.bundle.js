@@ -2842,9 +2842,6 @@
             this.map = null;
         }
         initGMap() {
-            if (this.map != null) {
-                return;
-            }
             var gMapApiElement = this.shadowRoot.getElementById('api');
             if (gMapApiElement == null || gMapApiElement.libraryLoaded != true) {
                 return;
