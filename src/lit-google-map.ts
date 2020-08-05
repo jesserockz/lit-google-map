@@ -151,11 +151,11 @@ export class LitGoogleMap extends LitElement {
     }
 
     removeMarkers() {
-        if (this.map && this.markers) {
-            for (var i = 0, child; child = this.markers[i]; ++i) {
-              (child as google.maps.Marker).setMap(null);
-            }
-        }
+        // if (this.map && this.markers) {
+        //     for (var i = 0, child; child = this.markers[i]; ++i) {
+        //       (child as google.maps.Marker).setMap(null);
+        //     }
+        // }
     }
 
     fitToMarkersChanged() {
