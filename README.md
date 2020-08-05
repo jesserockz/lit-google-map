@@ -74,13 +74,14 @@ npm run bundle
 * '*zoom*' - Zoom level (default: '8')
 * '*fit-to-markers*' - Fit map area to display all markers
 * '*map-type*' - Map type to display: 'roadmap', 'satellite', 'hybrid', 'terrain'
-* '*center-latitude*'- Latitude of map initial center point
-* '*center-longitude*' - Longitude of map initial center point
-
+* '*center-latitude*'- Latitude of map initial center point (default: '39.1031')
+* '*center-longitude*' - Longitude of map initial center point (default: '-84.5120')
+* '*set-center*' - Ensure that the center point is on the map; to be used in conjunction with center-latitude and center-longitude
+* '*set-radius*' - Number (default: '0'); sets a radius circle around the center point (center-latitude, center-longitude)
 Example:
 
 ```html
-<lit-google-map api-key="SOME_API_KEY" zoom="6" map-type="satellite" center-latitude="51.8436554" center-longitude="19.5070867">    
+<lit-google-map api-key="SOME_API_KEY" zoom="6" map-type="satellite" center-latitude="51.8436554" center-longitude="19.5070867" set-center>    
 </lit-google-map>
 ```
 
