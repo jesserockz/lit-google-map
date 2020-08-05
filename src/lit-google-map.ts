@@ -62,9 +62,9 @@ export class LitGoogleMap extends LitElement {
     marketObserverSet : boolean;
 
     initGMap() {
-        // if (this.map != null) {
-        //     return; // already initialized
-        // }
+        if (this.map != null) {
+            return; // already initialized
+        }
 
         var gMapApiElement = this.shadowRoot.getElementById('api') as LitGoogleMapsApi;
 
