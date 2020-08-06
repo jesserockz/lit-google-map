@@ -91,7 +91,7 @@ Example:
 * '*longitude*' - Marker longitude position
 * '*label*' - Marker label
 * '*z-index*' - Marker z index
-* '*icon-url*' - Marker icon image url
+* '*icon*' - Marker icon image url
 
 Example:
 

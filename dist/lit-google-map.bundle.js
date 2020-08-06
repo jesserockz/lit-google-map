@@ -2690,6 +2690,7 @@
             this.label = null;
             this.zIndex = 0;
             this.open = false;
+            this.icon = null;
             this.map = null;
             this.marker = null;
         }
@@ -2757,6 +2758,7 @@
         mapReady() {
             this.marker = new google.maps.Marker({
                 map: this.map,
+                icon: this.icon,
                 position: {
                     lat: this.latitude,
                     lng: this.longitude
@@ -2819,6 +2821,10 @@
         property({ type: Boolean, reflect: true }),
         __metadata$1("design:type", Boolean)
     ], exports.LitGoogleMapMarker.prototype, "open", void 0);
+    __decorate$1([
+        property({ type: String, reflect: true }),
+        __metadata$1("design:type", String)
+    ], exports.LitGoogleMapMarker.prototype, "icon", void 0);
     exports.LitGoogleMapMarker = __decorate$1([
         customElement('lit-google-map-marker')
     ], exports.LitGoogleMapMarker);
