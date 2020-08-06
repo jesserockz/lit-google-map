@@ -17,6 +17,9 @@ export class LitGoogleMapMarker extends LitElement {
     @property({type : Boolean, reflect: true})
     open : boolean = false;
 
+    @property({type: String, reflect: true, attribute: 'icon-url'})
+    iconUrl : string | null = null;
+
     map : google.maps.Map = null;
     marker : google.maps.Marker = null;
     info : google.maps.InfoWindow;
@@ -101,7 +104,9 @@ export class LitGoogleMapMarker extends LitElement {
             label: this.label,
             zIndex: this.zIndex
         });
-
+        if (this.iconUrl != null) {
+            this.marker.setIcon(this.iconUrl)
+        }
         this.contentChanged();
     }
 
