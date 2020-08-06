@@ -231,7 +231,9 @@ let LitGoogleMapMarker = class LitGoogleMapMarker extends LitElement {
                 break;
             }
             case 'z-index': {
-                (_b = this.marker) === null || _b === void 0 ? void 0 : _b.setZIndex(newval);
+                if (typeof newval == "number") {
+                    (_b = this.marker) === null || _b === void 0 ? void 0 : _b.setZIndex(newval);
+                }
                 break;
             }
         }
@@ -251,6 +253,10 @@ let LitGoogleMapMarker = class LitGoogleMapMarker extends LitElement {
     updatePosition() {
         var _a;
         (_a = this.marker) === null || _a === void 0 ? void 0 : _a.setPosition(new google.maps.LatLng(this.latitude, this.longitude));
+    }
+    removeMap() {
+        this.map = null;
+        this.mapChanged();
     }
     changeMap(newMap) {
         this.map = newMap;
@@ -357,6 +363,9 @@ let LitGoogleMap = class LitGoogleMap extends LitElement {
         this.setCenter = false;
         this.setRadius = 0;
         this.map = null;
+        this.markerObserverSet = false;
+        this.attrObserverSet = false;
+        this.circle = null;
     }
     initGMap() {
         if (this.map != null) {
@@ -391,18 +400,45 @@ let LitGoogleMap = class LitGoogleMap extends LitElement {
             }
         }
     }
+    removeChildrenFromMap(children) {
+        if (this.map) {
+            for (var i = 0, child; child = children[i]; ++i) {
+                child.removeMap();
+            }
+        }
+    }
     observeMarkers() {
-        if (this.marketObserverSet)
+        if (this.markerObserverSet)
             return;
         this.addEventListener("selector-items-changed", event => { this.updateMarkers(); });
-        this.marketObserverSet = true;
+        this.markerObserverSet = true;
+    }
+    observeAttrs() {
+        if (this.attrObserverSet)
+            return;
+        this.addEventListener("map-attrs-changed", event => {
+            if (this.fitToMarkers) {
+                this.fitToMarkersChanged();
+            }
+            else if (this.setCenter) {
+                this.setCenterPoint();
+            }
+            else if (this.setRadius > 0) {
+                this.setRadiusCircle();
+            }
+        });
+        this.attrObserverSet = true;
     }
     updateMarkers() {
         this.observeMarkers();
+        this.observeAttrs();
         var markersSelector = this.shadowRoot.getElementById("markers-selector");
         if (!markersSelector)
             return;
         var newMarkers = markersSelector.items;
+        if (this.circle != null) {
+            this.circle.setMap(null);
+        }
         if (this.markers && newMarkers.length === this.markers.length) {
             var added = newMarkers.filter(m => {
                 return this.markers && this.markers.indexOf(m) === -1;
@@ -410,7 +446,9 @@ let LitGoogleMap = class LitGoogleMap extends LitElement {
             if (added.length == 0)
                 return;
         }
-        this.removeMarkers();
+        if (this.markers) {
+            this.removeChildrenFromMap(this.markers);
+        }
         this.markers = newMarkers;
         this.attachChildrenToMap(this.markers);
         if (this.fitToMarkers) {
@@ -419,13 +457,6 @@ let LitGoogleMap = class LitGoogleMap extends LitElement {
         else {
             if (this.setRadius) {
                 this.setRadiusCircle();
-            }
-        }
-    }
-    removeMarkers() {
-        if (this.map && this.markers) {
-            for (var i = 0, child; child = this.markers[i]; ++i) {
-                child.setMap(null);
             }
         }
     }
@@ -440,11 +471,8 @@ let LitGoogleMap = class LitGoogleMap extends LitElement {
             }
             if (this.setRadius > 0) {
                 let radius = new google.maps.Circle({
-                    strokeOpacity: 0.8,
-                    strokeColor: '#FFC107',
-                    strokeWeight: 1,
-                    fillOpacity: 0.3,
-                    fillColor: '#FFC107',
+                    strokeOpacity: 0,
+                    fillOpacity: 0,
                     center: new google.maps.LatLng(this.centerLatitude, this.centerLongitude),
                     radius: this.setRadius
                 });
@@ -459,23 +487,24 @@ let LitGoogleMap = class LitGoogleMap extends LitElement {
                 this.map.panToBounds;
             }
             if (this.setCenter) {
-                this.map.setCenter(new google.maps.LatLng(this.centerLatitude, this.centerLongitude));
-                this.map.panTo(new google.maps.LatLng(this.centerLatitude, this.centerLongitude));
+                this.setCenterPoint();
             }
         }
+    }
+    setCenterPoint() {
+        this.map.setCenter(new google.maps.LatLng(this.centerLatitude, this.centerLongitude));
+        this.map.panTo(new google.maps.LatLng(this.centerLatitude, this.centerLongitude));
     }
     setRadiusCircle() {
         var bounds = new google.maps.LatLngBounds();
         let radius = new google.maps.Circle({
-            strokeOpacity: 0.8,
-            strokeColor: '#FFC107',
-            fillOpacity: 0.3,
-            strokeWeight: 1,
-            fillColor: '#FFC107',
+            strokeOpacity: 0,
+            fillOpacity: 0,
             center: new google.maps.LatLng(this.centerLatitude, this.centerLongitude),
             radius: this.setRadius
         });
-        radius.setMap(this.map);
+        this.circle = radius;
+        this.circle.setMap(this.map);
         bounds.union(radius.getBounds());
         this.map.fitBounds(bounds);
         this.map.panToBounds;
@@ -497,6 +526,11 @@ let LitGoogleMap = class LitGoogleMap extends LitElement {
                 id="markers-selector"
                 selected-attribute="open"
                 activate-event="google-map-marker-open"
+                set-radius=${this.setRadius}
+                set-center=${this.setCenter}
+                fit-to-markers=${this.fitToMarkers}
+                center-latitude=${this.centerLatitude}
+                center-longitude=${this.centerLongitude}
                 @google-map-marker-close=${(e) => this.deselectMarker(e)}>
                     <slot id="markers" name="markers"></slot>
             </lit-selector>
@@ -626,10 +660,13 @@ let LitSelector = class LitSelector extends LitElement {
             this.dispatchEvent(new CustomEvent("selector-items-changed", { detail: {}, composed: true }));
         });
         this.addListener(this.activateEvent);
+        this.observer = new MutationObserver(() => this.updateMap());
+        this.observer.observe(this, { attributes: true });
     }
     disconnectedCallback() {
         super.disconnectedCallback();
         this.removeListener(this.activateEvent);
+        this.observer.disconnect();
     }
     attributeChangedCallback(name, oldval, newval) {
         super.attributeChangedCallback(name, oldval, newval);
@@ -645,6 +682,9 @@ let LitSelector = class LitSelector extends LitElement {
             if (isSelected != item.hasAttribute(this.selectedAttribute))
                 item.toggleAttribute(this.selectedAttribute);
         }
+    }
+    updateMap() {
+        this.dispatchEvent(new CustomEvent("map-attrs-changed", { detail: {}, composed: true }));
     }
     updateItems() {
         var _a, _b;

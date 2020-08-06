@@ -59,10 +59,13 @@ export class LitGoogleMap extends LitElement {
 
     markers : Array<Node>;
 
-    marketObserverSet : boolean;
+    markerObserverSet : boolean = false;
+
+    attrObserverSet : boolean = false;
+
+    circle : google.maps.Circle = null;
 
     initGMap() {
-        console.log("in init")
         if (this.map != null) {
             return; // already initialized
         }
@@ -106,22 +109,50 @@ export class LitGoogleMap extends LitElement {
         }
     }
 
+    removeChildrenFromMap(children : Array<Node>) {
+        if (this.map) {
+            for (var i = 0, child; child = children[i]; ++i) {
+                (child as LitGoogleMapMarker).removeMap();
+              }
+        }
+    }
+
     observeMarkers() {
-        if (this.marketObserverSet)
+        if (this.markerObserverSet)
             return;
 
         this.addEventListener("selector-items-changed", event => { this.updateMarkers() });
-        this.marketObserverSet = true;
+        this.markerObserverSet = true;
+    }
+
+    observeAttrs() {
+        if (this.attrObserverSet)
+            return;
+        
+        this.addEventListener("map-attrs-changed", event => { 
+            if (this.fitToMarkers) {
+                this.fitToMarkersChanged()
+            } else if (this.setCenter) {
+                this.setCenterPoint()
+            } else if (this.setRadius > 0) {
+                this.setRadiusCircle()
+            }
+        });
+        this.attrObserverSet = true;
     }
 
     updateMarkers() {
         this.observeMarkers();
-
+        this.observeAttrs();
         var markersSelector = this.shadowRoot.getElementById("markers-selector") as LitSelector;
         if (!markersSelector)
             return;
 
         var newMarkers = markersSelector.items;
+
+        if (this.circle != null) {
+            this.circle.setMap(null);
+        }
 
         // do not recompute if markers have not been added or removed
         if (this.markers && newMarkers.length === this.markers.length)
@@ -132,30 +163,21 @@ export class LitGoogleMap extends LitElement {
             if (added.length == 0)
                 return
         }
-
-        this.removeMarkers();
+        
+        if (this.markers) {
+            this.removeChildrenFromMap(this.markers)
+        }
 
         this.markers = newMarkers;
 
         this.attachChildrenToMap(this.markers);
-
         if (this.fitToMarkers) {
             this.fitToMarkersChanged();
         } else {
             if (this.setRadius) {
                 this.setRadiusCircle()
-            } else {
-
             }
         }
-    }
-
-    removeMarkers() {
-        // if (this.map && this.markers) {
-        //     for (var i = 0, child; child = this.markers[i]; ++i) {
-        //       (child as google.maps.Marker).setMap(null);
-        //     }
-        // }
     }
 
     fitToMarkersChanged() {
@@ -164,16 +186,14 @@ export class LitGoogleMap extends LitElement {
             for (var i = 0, m; m = this.markers[i]; ++i) {
                 latLngBounds.extend(new google.maps.LatLng(m.latitude, m.longitude));
             }
+
             if (this.setCenter) {
                 latLngBounds.extend(new google.maps.LatLng(this.centerLatitude, this.centerLongitude))
             }
             if (this.setRadius > 0) {
                 let radius = new google.maps.Circle({
-                    strokeOpacity: 0.8,
-                    strokeColor: '#FFC107',
-                    strokeWeight: 1,
-                    fillOpacity: 0.3,
-                    fillColor: '#FFC107',
+                    strokeOpacity: 0,
+                    fillOpacity: 0,
                     center: new google.maps.LatLng(this.centerLatitude, this.centerLongitude),
                     radius: this.setRadius
                   });
@@ -186,30 +206,32 @@ export class LitGoogleMap extends LitElement {
             }
             if (!this.setCenter) {
                 this.map.setCenter(latLngBounds.getCenter());
-                this.map.panToBounds
+                this.map.panToBounds;
             }
             if (this.setCenter) {
-                this.map.setCenter(new google.maps.LatLng(this.centerLatitude, this.centerLongitude))
-                this.map.panTo(new google.maps.LatLng(this.centerLatitude, this.centerLongitude))
+                this.setCenterPoint()
             }
         }
+    }
+
+    setCenterPoint() {
+        this.map.setCenter(new google.maps.LatLng(this.centerLatitude, this.centerLongitude))
+        this.map.panTo(new google.maps.LatLng(this.centerLatitude, this.centerLongitude))
     }
 
     setRadiusCircle() {
         var bounds = new google.maps.LatLngBounds();
         let radius = new google.maps.Circle({
-            strokeOpacity: 0.8,
-            strokeColor: '#FFC107',
-            fillOpacity: 0.3,
-            strokeWeight: 1,
-            fillColor: '#FFC107',
+            strokeOpacity: 0,
+            fillOpacity: 0,
             center: new google.maps.LatLng(this.centerLatitude, this.centerLongitude),
             radius: this.setRadius
           });
-        radius.setMap(this.map)
-        bounds.union(radius.getBounds())
-        this.map.fitBounds(bounds)
-        this.map.panToBounds
+        this.circle = radius;
+        this.circle.setMap(this.map);
+        bounds.union(radius.getBounds());
+        this.map.fitBounds(bounds);
+        this.map.panToBounds;
     }
 
     deselectMarker(event : Event) {
@@ -231,6 +253,11 @@ export class LitGoogleMap extends LitElement {
                 id="markers-selector"
                 selected-attribute="open"
                 activate-event="google-map-marker-open"
+                set-radius=${this.setRadius}
+                set-center=${this.setCenter}
+                fit-to-markers=${this.fitToMarkers}
+                center-latitude=${this.centerLatitude}
+                center-longitude=${this.centerLongitude}
                 @google-map-marker-close=${(e) => this.deselectMarker(e)}>
                     <slot id="markers" name="markers"></slot>
             </lit-selector>

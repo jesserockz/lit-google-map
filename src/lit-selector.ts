@@ -16,6 +16,8 @@ export class LitSelector extends LitElement {
 
     _items: Array<Node> = [];
 
+    observer: MutationObserver;
+
     get items(): Array<Node> {
         return this._items;
     }
@@ -30,11 +32,15 @@ export class LitSelector extends LitElement {
           });
 
         this.addListener(this.activateEvent);
+
+        this.observer = new MutationObserver(() => this.updateMap())
+        this.observer.observe(this, {attributes: true})
     }
 
     disconnectedCallback() {
         super.disconnectedCallback();
         this.removeListener(this.activateEvent);
+        this.observer.disconnect()
     }
 
     attributeChangedCallback(name : string, oldval : any, newval : any) {
@@ -52,6 +58,10 @@ export class LitSelector extends LitElement {
             if (isSelected != (item as Element).hasAttribute(this.selectedAttribute))
                 (item as Element).toggleAttribute(this.selectedAttribute);
         }
+    }
+
+    updateMap() {
+        this.dispatchEvent(new CustomEvent("map-attrs-changed", { detail: {}, composed: true}));
     }
 
     updateItems() {

@@ -44,7 +44,9 @@ export class LitGoogleMapMarker extends LitElement {
                 break;
             }
             case 'z-index': {
-                this.marker?.setZIndex(newval);
+                if (typeof newval == "number") {
+                    this.marker?.setZIndex(newval);
+                }
                 break;
             }
         }
@@ -65,6 +67,11 @@ export class LitGoogleMapMarker extends LitElement {
 
     updatePosition() {
         this.marker?.setPosition(new google.maps.LatLng(this.latitude, this.longitude));
+    }
+
+    removeMap() {
+        this.map = null;
+        this.mapChanged();
     }
 
     changeMap(newMap : google.maps.Map) {
