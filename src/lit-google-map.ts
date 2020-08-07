@@ -53,7 +53,22 @@ export class LitGoogleMap extends LitElement {
     setCenter: boolean = false;
 
     @property({type : Number, attribute: 'set-radius'})
-    setRadius: number = 0
+    setRadius: number = 0;
+
+    @property({type : String, attribute: 'radius-color'})
+    radiusColor: string = '#f99d1c';
+
+    @property({type : String, attribute: 'radius-border-color'})
+    radiusBorderColor: string = '#f99d1c';
+
+    @property({type : Number, attribute: 'radius-opacity'})
+    radiusOpacity: number = 0.3;
+        
+    @property({type : Number, attribute: 'radius-border-opacity'})
+    radiusBorderOpacity: number = 0.8;
+
+    @property({type : Number, attribute: 'radius-border-weight'})
+    radiusBorderWeight: number = 2;
 
     map : google.maps.Map = null;
 
@@ -192,8 +207,11 @@ export class LitGoogleMap extends LitElement {
             }
             if (this.setRadius > 0) {
                 let radius = new google.maps.Circle({
-                    strokeOpacity: 0,
-                    fillOpacity: 0,
+                    strokeOpacity: this.radiusBorderOpacity,
+                    strokeColor: this.radiusBorderColor,
+                    strokeWeight: this.radiusBorderWeight,
+                    fillColor: this.radiusColor,
+                    fillOpacity: this.radiusOpacity,
                     center: new google.maps.LatLng(this.centerLatitude, this.centerLongitude),
                     radius: this.setRadius
                   });
@@ -222,8 +240,11 @@ export class LitGoogleMap extends LitElement {
     setRadiusCircle() {
         var bounds = new google.maps.LatLngBounds();
         let radius = new google.maps.Circle({
-            strokeOpacity: 0,
-            fillOpacity: 0,
+            strokeOpacity: this.radiusBorderOpacity,
+            strokeColor: this.radiusBorderColor,
+            strokeWeight: this.radiusBorderWeight,
+            fillColor: this.radiusColor,
+            fillOpacity: this.radiusOpacity,
             center: new google.maps.LatLng(this.centerLatitude, this.centerLongitude),
             radius: this.setRadius
           });

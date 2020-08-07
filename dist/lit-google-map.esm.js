@@ -368,6 +368,11 @@ let LitGoogleMap = class LitGoogleMap extends LitElement {
         this.centerLongitude = -84.5120;
         this.setCenter = false;
         this.setRadius = 0;
+        this.radiusColor = '#f99d1c';
+        this.radiusBorderColor = '#f99d1c';
+        this.radiusOpacity = 0.3;
+        this.radiusBorderOpacity = 0.8;
+        this.radiusBorderWeight = 2;
         this.map = null;
         this.markerObserverSet = false;
         this.attrObserverSet = false;
@@ -477,8 +482,11 @@ let LitGoogleMap = class LitGoogleMap extends LitElement {
             }
             if (this.setRadius > 0) {
                 let radius = new google.maps.Circle({
-                    strokeOpacity: 0,
-                    fillOpacity: 0,
+                    strokeOpacity: this.radiusBorderOpacity,
+                    strokeColor: this.radiusBorderColor,
+                    strokeWeight: this.radiusBorderWeight,
+                    fillColor: this.radiusColor,
+                    fillOpacity: this.radiusOpacity,
                     center: new google.maps.LatLng(this.centerLatitude, this.centerLongitude),
                     radius: this.setRadius
                 });
@@ -504,8 +512,11 @@ let LitGoogleMap = class LitGoogleMap extends LitElement {
     setRadiusCircle() {
         var bounds = new google.maps.LatLngBounds();
         let radius = new google.maps.Circle({
-            strokeOpacity: 0,
-            fillOpacity: 0,
+            strokeOpacity: this.radiusBorderOpacity,
+            strokeColor: this.radiusBorderColor,
+            strokeWeight: this.radiusBorderWeight,
+            fillColor: this.radiusColor,
+            fillOpacity: this.radiusOpacity,
             center: new google.maps.LatLng(this.centerLatitude, this.centerLongitude),
             radius: this.setRadius
         });
@@ -585,6 +596,26 @@ __decorate$2([
     property({ type: Number, attribute: 'set-radius' }),
     __metadata$2("design:type", Number)
 ], LitGoogleMap.prototype, "setRadius", void 0);
+__decorate$2([
+    property({ type: String, attribute: 'radius-color' }),
+    __metadata$2("design:type", String)
+], LitGoogleMap.prototype, "radiusColor", void 0);
+__decorate$2([
+    property({ type: String, attribute: 'radius-border-color' }),
+    __metadata$2("design:type", String)
+], LitGoogleMap.prototype, "radiusBorderColor", void 0);
+__decorate$2([
+    property({ type: Number, attribute: 'radius-opacity' }),
+    __metadata$2("design:type", Number)
+], LitGoogleMap.prototype, "radiusOpacity", void 0);
+__decorate$2([
+    property({ type: Number, attribute: 'radius-border-opacity' }),
+    __metadata$2("design:type", Number)
+], LitGoogleMap.prototype, "radiusBorderOpacity", void 0);
+__decorate$2([
+    property({ type: Number, attribute: 'radius-border-weight' }),
+    __metadata$2("design:type", Number)
+], LitGoogleMap.prototype, "radiusBorderWeight", void 0);
 LitGoogleMap = __decorate$2([
     customElement('lit-google-map')
 ], LitGoogleMap);

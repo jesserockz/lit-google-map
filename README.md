@@ -78,6 +78,12 @@ npm run bundle
 * '*center-longitude*' - Longitude of map initial center point (default: '-84.5120')
 * '*set-center*' - Ensure that the center point is on the map; to be used in conjunction with center-latitude and center-longitude
 * '*set-radius*' - Number (default: '0'); sets a radius circle around the center point (center-latitude, center-longitude)
+* '*radius-color* - String (default: '#f99d1c'); sets the color of the radius circle, if present
+* '*radius-border-color* - String (default: '#f99d1c'); sets the color of the border of the radius circle, if present
+* '*radius-opacity* - Number (default: '0.3); sets the opacity of the radius circle, if present
+* '*radius-border-opacity* - Number (default: 0.8); sets the opacity of the border of the radius circle, if present
+* '*radius-border-weight* - Number (default: 2); sets the weight of the border of the radius circle, if present
+
 Example:
 
 ```html
