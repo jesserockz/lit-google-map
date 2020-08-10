@@ -2930,9 +2930,6 @@
             if (!markersSelector)
                 return;
             var newMarkers = markersSelector.items;
-            if (this.circle != null) {
-                this.circle.setMap(null);
-            }
             if (this.markers && newMarkers.length === this.markers.length) {
                 var added = newMarkers.filter(m => {
                     return this.markers && this.markers.indexOf(m) === -1;
@@ -2947,14 +2944,16 @@
             this.attachChildrenToMap(this.markers);
             if (this.fitToMarkers) {
                 this.fitToMarkersChanged();
+                return;
             }
-            else {
-                if (this.setRadius > 0) {
-                    this.setRadiusCircle();
-                }
+            if (this.setRadius > 0) {
+                this.setRadiusCircle();
             }
         }
         fitToMarkersChanged() {
+            if (this.circle != null) {
+                this.circle.setMap(null);
+            }
             if (this.map && this.fitToMarkers && this.markers.length > 0) {
                 var latLngBounds = new google.maps.LatLngBounds();
                 for (var i = 0, m; m = this.markers[i]; ++i) {
@@ -2973,7 +2972,8 @@
                         center: new google.maps.LatLng(this.centerLatitude, this.centerLongitude),
                         radius: this.setRadius
                     });
-                    radius.setMap(this.map);
+                    this.circle = radius;
+                    this.circle.setMap(this.map);
                     latLngBounds.union(radius.getBounds());
                 }
                 if (this.markers.length > 1 || this.setCenter) {
@@ -2996,6 +2996,9 @@
             this.map.panTo(new google.maps.LatLng(this.centerLatitude, this.centerLongitude));
         }
         setRadiusCircle() {
+            if (this.circle != null) {
+                this.circle.setMap(null);
+            }
             var bounds = new google.maps.LatLngBounds();
             let radius = new google.maps.Circle({
                 strokeOpacity: this.radiusBorderOpacity,
