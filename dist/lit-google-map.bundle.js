@@ -2949,7 +2949,7 @@
                 this.fitToMarkersChanged();
             }
             else {
-                if (this.setRadius) {
+                if (this.setRadius > 0) {
                     this.setRadiusCircle();
                 }
             }
@@ -2982,14 +2982,17 @@
                 if (!this.setCenter) {
                     this.map.setCenter(latLngBounds.getCenter());
                     this.map.panToBounds;
+                    return;
                 }
-                if (this.setCenter) {
-                    this.setCenterPoint();
-                }
+                this.setCenterPoint();
             }
         }
         setCenterPoint() {
             this.map.setCenter(new google.maps.LatLng(this.centerLatitude, this.centerLongitude));
+            if (this.setRadius > 0) {
+                this.setRadiusCircle();
+                return;
+            }
             this.map.panTo(new google.maps.LatLng(this.centerLatitude, this.centerLongitude));
         }
         setRadiusCircle() {
