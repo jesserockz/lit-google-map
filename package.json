@@ -1,6 +1,6 @@
 {
     "name": "@nelsongonzalez/lit-google-map",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Google Maps web components based on LitElement",
     "private": true,
     "license": "MIT",
@@ -30,6 +30,6 @@
         "rollup-plugin-terser": "^5.2.0"
     },
     "publishConfig": {
-        "registry":"https://npm.pkg.github.com"
+        "registry": "https://npm.pkg.github.com"
     }
 }
