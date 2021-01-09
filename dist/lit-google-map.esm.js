@@ -16,12 +16,6 @@ class ScriptLoaderMap {
         }
         return ScriptLoaderMap.instance;
     }
-    removeAllScripts() {
-        console.log("removeAllScripts", this.apiMap);
-        for (const [_, value] of Object.entries(this.apiMap)) {
-            value.removeScript();
-        }
-    }
     nameFromUrl(url) {
         return url.replace(/[\:\/\%\?\&\.\=\-\,]/g, '_') + '_api';
     }
@@ -55,7 +49,6 @@ class ScriptLoader {
         this.script = script;
     }
     removeScript() {
-        console.log("removeScript", this.script);
         if (this.script.parentNode) {
             this.script.parentNode.removeChild(this.script);
         }
@@ -135,10 +128,6 @@ class JsonpLibraryElement extends LitElement {
         this.isReady = true;
         if (this.libraryUrl != null)
             this.loadLibrary();
-    }
-    disconnectedCallback() {
-        console.log("disconnectedCallback");
-        super.connectedCallback();
     }
 }
 let LitGoogleMapsApi = class LitGoogleMapsApi extends JsonpLibraryElement {
