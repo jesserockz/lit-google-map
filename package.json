@@ -1,6 +1,6 @@
 {
-    "name": "lit-google-map",
-    "version": "0.1.0",
+    "name": "@nelsongonzalez/lit-google-map",
+    "version": "1.0.3",
     "description": "Google Maps web components based on LitElement",
     "private": true,
     "license": "MIT",
@@ -10,7 +10,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/arkadiuszwojcik/lit-google-map.git"
+        "url": "git://github.com/nelsongonzalez/lit-google-map.git"
     },
     "main": "dist/lit-google-map.bundle.min.js",
     "module": "dist/lit-google-map.esm.min.js",
@@ -20,7 +20,7 @@
         "bundle": "npm run build && rollup -c"
     },
     "dependencies": {
-        "lit-element": "^2.2.1"
+        "lit-element": "^2.3.0"
     },
     "devDependencies": {
         "@types/googlemaps": "^3.39.2",
@@ -28,5 +28,8 @@
         "rollup": "^1.30.0",
         "@rollup/plugin-node-resolve": "^7.0.0",
         "rollup-plugin-terser": "^5.2.0"
+    },
+    "publishConfig": {
+        "registry":"https://npm.pkg.github.com"
     }
 }
