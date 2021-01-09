@@ -16,6 +16,12 @@ class ScriptLoaderMap {
         }
         return ScriptLoaderMap.instance;
     }
+    removeAllScripts() {
+        console.log("removeAllScripts", this.apiMap);
+        for (const [_, value] of Object.entries(this.apiMap)) {
+            value.removeScript();
+        }
+    }
     nameFromUrl(url) {
         return url.replace(/[\:\/\%\?\&\.\=\-\,]/g, '_') + '_api';
     }
@@ -49,6 +55,7 @@ class ScriptLoader {
         this.script = script;
     }
     removeScript() {
+        console.log("removeScript", this.script);
         if (this.script.parentNode) {
             this.script.parentNode.removeChild(this.script);
         }
@@ -128,6 +135,10 @@ class JsonpLibraryElement extends LitElement {
         this.isReady = true;
         if (this.libraryUrl != null)
             this.loadLibrary();
+    }
+    disconnectedCallback() {
+        console.log("disconnectedCallback");
+        super.connectedCallback();
     }
 }
 let LitGoogleMapsApi = class LitGoogleMapsApi extends JsonpLibraryElement {
@@ -213,9 +224,11 @@ let LitGoogleMapMarker = class LitGoogleMapMarker extends LitElement {
         this.latitude = 0;
         this.longitude = 0;
         this.label = null;
+        this.labelStyles = {};
         this.zIndex = 0;
         this.open = false;
         this.icon = null;
+        this.iconStyles = null;
         this.map = null;
         this.marker = null;
     }
@@ -281,14 +294,26 @@ let LitGoogleMapMarker = class LitGoogleMapMarker extends LitElement {
         }
     }
     mapReady() {
+        let iconStyles;
+        if (this.iconStyles) {
+            iconStyles = {
+                size: new google.maps.Size(this.iconStyles.size.width, this.iconStyles.size.height),
+                scaledSize: new google.maps.Size(this.iconStyles.scaledSize.width, this.iconStyles.scaledSize.height),
+                anchor: new google.maps.Point(this.iconStyles.anchor.x, this.iconStyles.anchor.y),
+                labelOrigin: new google.maps.Point(this.iconStyles.labelOrigin.x, this.iconStyles.labelOrigin.y)
+            };
+        }
+        else {
+            iconStyles = {};
+        }
         this.marker = new google.maps.Marker({
             map: this.map,
-            icon: this.icon,
+            icon: Object.assign({ url: this.icon }, iconStyles),
             position: {
                 lat: this.latitude,
                 lng: this.longitude
             },
-            label: this.label,
+            label: Object.assign({ text: this.label }, this.labelStyles),
             zIndex: this.zIndex
         });
         this.contentChanged();
@@ -339,6 +364,10 @@ __decorate$1([
     __metadata$1("design:type", String)
 ], LitGoogleMapMarker.prototype, "label", void 0);
 __decorate$1([
+    property({ type: Object }),
+    __metadata$1("design:type", Object)
+], LitGoogleMapMarker.prototype, "labelStyles", void 0);
+__decorate$1([
     property({ type: Number, reflect: true, attribute: 'z-index' }),
     __metadata$1("design:type", Number)
 ], LitGoogleMapMarker.prototype, "zIndex", void 0);
@@ -350,6 +379,10 @@ __decorate$1([
     property({ type: String, reflect: true }),
     __metadata$1("design:type", String)
 ], LitGoogleMapMarker.prototype, "icon", void 0);
+__decorate$1([
+    property({ type: Object }),
+    __metadata$1("design:type", Object)
+], LitGoogleMapMarker.prototype, "iconStyles", void 0);
 LitGoogleMapMarker = __decorate$1([
     customElement('lit-google-map-marker')
 ], LitGoogleMapMarker);

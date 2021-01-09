@@ -11,6 +11,9 @@ export class LitGoogleMapMarker extends LitElement {
     @property({type : String, reflect: true})
     label : string | null = null;
 
+    @property({type : Object})
+    labelStyles: object = {};
+
     @property({type : Number, reflect: true, attribute: 'z-index'})
     zIndex : number = 0;
 
@@ -19,6 +22,9 @@ export class LitGoogleMapMarker extends LitElement {
 
     @property({type: String, reflect: true})
     icon : string | null = null;
+
+    @property({type : Object})
+    iconStyles: any = null;
 
     map : google.maps.Map = null;
     marker : google.maps.Marker = null;
@@ -95,14 +101,31 @@ export class LitGoogleMapMarker extends LitElement {
     }
 
     mapReady() {
+        let iconStyles;
+        if (this.iconStyles) {
+            iconStyles = {
+                size: new google.maps.Size(this.iconStyles.size.width, this.iconStyles.size.height),
+                scaledSize: new google.maps.Size(this.iconStyles.scaledSize.width, this.iconStyles.scaledSize.height),
+                anchor: new google.maps.Point(this.iconStyles.anchor.x, this.iconStyles.anchor.y),
+                labelOrigin: new google.maps.Point(this.iconStyles.labelOrigin.x, this.iconStyles.labelOrigin.y)
+            }
+        } else {
+            iconStyles = {};
+        }
         this.marker = new google.maps.Marker({
             map: this.map,
-            icon: this.icon,
+            icon: {
+                url: this.icon,
+                ...iconStyles
+            },
             position: {
               lat: this.latitude,
               lng: this.longitude
             },
-            label: this.label,
+            label: {
+                text: this.label,
+                ...this.labelStyles
+            },
             zIndex: this.zIndex
         });
         this.contentChanged();
