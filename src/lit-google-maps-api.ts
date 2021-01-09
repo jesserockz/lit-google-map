@@ -66,20 +66,23 @@ export class LitGoogleMapsApi extends JsonpLibraryElement {
     mapsUrl = 'https://maps.googleapis.com/maps/api/js?callback=%%callback%%';
 
     @property({type : String})
-    version = '3.39';
+    version = '3.43';
 
     @property({type : String})
     language = '';
 
+    @property({type : String})
+    mapId = '';
+
     get libraryUrl() : string {
-        return this.computeUrl(this.mapsUrl, this.version, this.apiKey, this.clientId, this.language);
+        return this.computeUrl(this.mapsUrl, this.version, this.apiKey, this.clientId, this.language, this.mapId);
     }
 
     get notifyEvent() : string {
         return 'api-load';
     }
 
-    computeUrl(mapsUrl : string, version : string, apiKey : string, clientId : string, language : string) : string {
+    computeUrl(mapsUrl : string, version : string, apiKey : string, clientId : string, language : string, mapId : string) : string {
         var url = mapsUrl + '&v=' + version;
 
         // Always load all Maps API libraries.
@@ -88,7 +91,7 @@ export class LitGoogleMapsApi extends JsonpLibraryElement {
         if (apiKey && !clientId) {
             url += '&key=' + apiKey;
         }
-      
+
         if (clientId) {
             url += '&client=' + clientId;
         }
@@ -103,6 +106,10 @@ export class LitGoogleMapsApi extends JsonpLibraryElement {
 
         if (language) {
             url += '&language=' + language;
+        }
+
+        if (mapId) {
+            url += '&map_ids=' + mapId;
         }
 
         return url;

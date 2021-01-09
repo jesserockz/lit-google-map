@@ -136,16 +136,17 @@ let LitGoogleMapsApi = class LitGoogleMapsApi extends JsonpLibraryElement {
         this.apiKey = '';
         this.clientId = '';
         this.mapsUrl = 'https://maps.googleapis.com/maps/api/js?callback=%%callback%%';
-        this.version = '3.39';
+        this.version = '3.43';
         this.language = '';
+        this.mapId = '';
     }
     get libraryUrl() {
-        return this.computeUrl(this.mapsUrl, this.version, this.apiKey, this.clientId, this.language);
+        return this.computeUrl(this.mapsUrl, this.version, this.apiKey, this.clientId, this.language, this.mapId);
     }
     get notifyEvent() {
         return 'api-load';
     }
-    computeUrl(mapsUrl, version, apiKey, clientId, language) {
+    computeUrl(mapsUrl, version, apiKey, clientId, language, mapId) {
         var url = mapsUrl + '&v=' + version;
         url += '&libraries=drawing,geometry,places,visualization';
         if (apiKey && !clientId) {
@@ -162,6 +163,9 @@ let LitGoogleMapsApi = class LitGoogleMapsApi extends JsonpLibraryElement {
         }
         if (language) {
             url += '&language=' + language;
+        }
+        if (mapId) {
+            url += '&map_ids=' + mapId;
         }
         return url;
     }
@@ -186,6 +190,10 @@ __decorate([
     property({ type: String }),
     __metadata("design:type", Object)
 ], LitGoogleMapsApi.prototype, "language", void 0);
+__decorate([
+    property({ type: String }),
+    __metadata("design:type", Object)
+], LitGoogleMapsApi.prototype, "mapId", void 0);
 LitGoogleMapsApi = __decorate([
     customElement('lit-google-maps-api')
 ], LitGoogleMapsApi);
@@ -373,6 +381,8 @@ let LitGoogleMap = class LitGoogleMap extends LitElement {
         this.radiusOpacity = 0.3;
         this.radiusBorderOpacity = 0.8;
         this.radiusBorderWeight = 2;
+        this.language = '';
+        this.mapId = '';
         this.map = null;
         this.markerObserverSet = false;
         this.attrObserverSet = false;
@@ -394,7 +404,8 @@ let LitGoogleMap = class LitGoogleMap extends LitElement {
             zoom: this.zoom,
             center: { lat: this.centerLatitude, lng: this.centerLongitude },
             mapTypeId: this.mapType,
-            styles: this.styles
+            styles: this.styles,
+            mapId: this.mapId
         };
     }
     mapApiLoaded() {
@@ -544,8 +555,14 @@ let LitGoogleMap = class LitGoogleMap extends LitElement {
     }
     render() {
         return html `
-            <lit-google-maps-api id="api" api-key="${this.apiKey}" version="${this.version}" @api-load=${() => this.mapApiLoaded()}></lit-google-maps-api>
-            <lit-selector 
+            <lit-google-maps-api
+                id="api"
+                api-key="${this.apiKey}"
+                version="${this.version}"
+                language="${this.language}"
+                mapId="${this.mapId}"
+                @api-load=${() => this.mapApiLoaded()}></lit-google-maps-api>
+            <lit-selector
                 id="markers-selector"
                 selected-attribute="open"
                 activate-event="google-map-marker-open"
@@ -622,6 +639,14 @@ __decorate$2([
     property({ type: Number, attribute: 'radius-border-weight' }),
     __metadata$2("design:type", Number)
 ], LitGoogleMap.prototype, "radiusBorderWeight", void 0);
+__decorate$2([
+    property({ type: String }),
+    __metadata$2("design:type", String)
+], LitGoogleMap.prototype, "language", void 0);
+__decorate$2([
+    property({ type: String }),
+    __metadata$2("design:type", String)
+], LitGoogleMap.prototype, "mapId", void 0);
 LitGoogleMap = __decorate$2([
     customElement('lit-google-map')
 ], LitGoogleMap);

@@ -63,12 +63,18 @@ export class LitGoogleMap extends LitElement {
 
     @property({type : Number, attribute: 'radius-opacity'})
     radiusOpacity: number = 0.3;
-        
+
     @property({type : Number, attribute: 'radius-border-opacity'})
     radiusBorderOpacity: number = 0.8;
 
     @property({type : Number, attribute: 'radius-border-weight'})
     radiusBorderWeight: number = 2;
+
+    @property({type : String})
+    language: string = '';
+
+    @property({type : String})
+    mapId: string = '';
 
     map : google.maps.Map = null;
 
@@ -102,7 +108,8 @@ export class LitGoogleMap extends LitElement {
             center: {lat: this.centerLatitude, lng: this.centerLongitude},
             mapTypeId: this.mapType,
             // @ts-ignore
-            styles: this.styles
+            styles: this.styles,
+            mapId: this.mapId
         };
     }
 
@@ -143,8 +150,8 @@ export class LitGoogleMap extends LitElement {
     observeAttrs() {
         if (this.attrObserverSet)
             return;
-        
-        this.addEventListener("map-attrs-changed", event => { 
+
+        this.addEventListener("map-attrs-changed", event => {
             if (this.fitToMarkers) {
                 this.fitToMarkersChanged()
             } else if (this.setCenter) {
@@ -174,7 +181,7 @@ export class LitGoogleMap extends LitElement {
             if (added.length == 0)
                 return
         }
-        
+
         if (this.markers) {
             this.removeChildrenFromMap(this.markers)
         }
@@ -275,8 +282,14 @@ export class LitGoogleMap extends LitElement {
 
     render() {
         return html`
-            <lit-google-maps-api id="api" api-key="${this.apiKey}" version="${this.version}" @api-load=${() => this.mapApiLoaded()}></lit-google-maps-api>
-            <lit-selector 
+            <lit-google-maps-api
+                id="api"
+                api-key="${this.apiKey}"
+                version="${this.version}"
+                language="${this.language}"
+                mapId="${this.mapId}"
+                @api-load=${() => this.mapApiLoaded()}></lit-google-maps-api>
+            <lit-selector
                 id="markers-selector"
                 selected-attribute="open"
                 activate-event="google-map-marker-open"
