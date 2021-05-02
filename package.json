@@ -1,6 +1,6 @@
 {
     "name": "@nelsongonzalez/lit-google-map",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "Google Maps web components based on LitElement",
     "license": "MIT",
     "author": {
@@ -19,14 +19,14 @@
         "bundle": "npm run build && rollup -c"
     },
     "dependencies": {
-        "lit-element": "^2.3.0"
+        "lit-element": "~2.4.0"
     },
     "devDependencies": {
-        "@types/googlemaps": "^3.39.2",
-        "typescript": "^3.7.5",
-        "rollup": "^1.30.0",
-        "@rollup/plugin-node-resolve": "^7.0.0",
-        "rollup-plugin-terser": "^5.2.0"
+        "@rollup/plugin-node-resolve": "^11.2.1",
+        "@types/googlemaps": "^3.43.3",
+        "rollup": "^2.46.0",
+        "rollup-plugin-terser": "^7.0.2",
+        "typescript": "^4.2.4"
     },
     "publishConfig": {
         "registry": "https://npm.pkg.github.com"
