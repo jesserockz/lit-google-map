@@ -1,4 +1,5 @@
-import { property, customElement, LitElement, css, html } from 'lit-element';
+import { LitElement, css, html } from 'lit';
+import { property, customElement } from 'lit/decorators.js';
 
 class ScriptLoaderMap {
     constructor() {
@@ -84,13 +85,13 @@ class ScriptLoader {
     }
 }
 
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+var __decorate$3 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+var __metadata$3 = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 class JsonpLibraryElement extends LitElement {
@@ -170,41 +171,41 @@ let LitGoogleMapsApi = class LitGoogleMapsApi extends JsonpLibraryElement {
         return url;
     }
 };
-__decorate([
+__decorate$3([
     property({ type: String, attribute: 'api-key' }),
-    __metadata("design:type", Object)
+    __metadata$3("design:type", Object)
 ], LitGoogleMapsApi.prototype, "apiKey", void 0);
-__decorate([
+__decorate$3([
     property({ type: String, attribute: 'client-id' }),
-    __metadata("design:type", Object)
+    __metadata$3("design:type", Object)
 ], LitGoogleMapsApi.prototype, "clientId", void 0);
-__decorate([
+__decorate$3([
     property({ type: String, attribute: 'maps-url' }),
-    __metadata("design:type", Object)
+    __metadata$3("design:type", Object)
 ], LitGoogleMapsApi.prototype, "mapsUrl", void 0);
-__decorate([
+__decorate$3([
     property({ type: String }),
-    __metadata("design:type", Object)
+    __metadata$3("design:type", Object)
 ], LitGoogleMapsApi.prototype, "version", void 0);
-__decorate([
+__decorate$3([
     property({ type: String }),
-    __metadata("design:type", Object)
+    __metadata$3("design:type", Object)
 ], LitGoogleMapsApi.prototype, "language", void 0);
-__decorate([
+__decorate$3([
     property({ type: String }),
-    __metadata("design:type", Object)
+    __metadata$3("design:type", Object)
 ], LitGoogleMapsApi.prototype, "mapId", void 0);
-LitGoogleMapsApi = __decorate([
+LitGoogleMapsApi = __decorate$3([
     customElement('lit-google-maps-api')
 ], LitGoogleMapsApi);
 
-var __decorate$1 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+var __decorate$2 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$1 = (undefined && undefined.__metadata) || function (k, v) {
+var __metadata$2 = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 let LitGoogleMapMarker = class LitGoogleMapMarker extends LitElement {
@@ -340,49 +341,49 @@ let LitGoogleMapMarker = class LitGoogleMapMarker extends LitElement {
         }
     }
 };
-__decorate$1([
+__decorate$2([
     property({ type: Number, reflect: true }),
-    __metadata$1("design:type", Number)
+    __metadata$2("design:type", Number)
 ], LitGoogleMapMarker.prototype, "latitude", void 0);
-__decorate$1([
+__decorate$2([
     property({ type: Number, reflect: true }),
-    __metadata$1("design:type", Number)
+    __metadata$2("design:type", Number)
 ], LitGoogleMapMarker.prototype, "longitude", void 0);
-__decorate$1([
+__decorate$2([
     property({ type: String, reflect: true }),
-    __metadata$1("design:type", String)
+    __metadata$2("design:type", String)
 ], LitGoogleMapMarker.prototype, "label", void 0);
-__decorate$1([
+__decorate$2([
     property({ type: Object }),
-    __metadata$1("design:type", Object)
+    __metadata$2("design:type", Object)
 ], LitGoogleMapMarker.prototype, "labelStyles", void 0);
-__decorate$1([
+__decorate$2([
     property({ type: Number, reflect: true, attribute: 'z-index' }),
-    __metadata$1("design:type", Number)
+    __metadata$2("design:type", Number)
 ], LitGoogleMapMarker.prototype, "zIndex", void 0);
-__decorate$1([
+__decorate$2([
     property({ type: Boolean, reflect: true }),
-    __metadata$1("design:type", Boolean)
+    __metadata$2("design:type", Boolean)
 ], LitGoogleMapMarker.prototype, "open", void 0);
-__decorate$1([
+__decorate$2([
     property({ type: String, reflect: true }),
-    __metadata$1("design:type", String)
+    __metadata$2("design:type", String)
 ], LitGoogleMapMarker.prototype, "icon", void 0);
-__decorate$1([
+__decorate$2([
     property({ type: Object }),
-    __metadata$1("design:type", Object)
+    __metadata$2("design:type", Object)
 ], LitGoogleMapMarker.prototype, "iconStyles", void 0);
-LitGoogleMapMarker = __decorate$1([
+LitGoogleMapMarker = __decorate$2([
     customElement('lit-google-map-marker')
 ], LitGoogleMapMarker);
 
-var __decorate$2 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+var __decorate$1 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$2 = (undefined && undefined.__metadata) || function (k, v) {
+var __metadata$1 = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 let LitGoogleMap = class LitGoogleMap extends LitElement {
@@ -601,75 +602,75 @@ let LitGoogleMap = class LitGoogleMap extends LitElement {
         `;
     }
 };
-__decorate$2([
+__decorate$1([
     property({ type: String, attribute: 'api-key' }),
-    __metadata$2("design:type", String)
+    __metadata$1("design:type", String)
 ], LitGoogleMap.prototype, "apiKey", void 0);
-__decorate$2([
+__decorate$1([
     property({ type: String }),
-    __metadata$2("design:type", String)
+    __metadata$1("design:type", String)
 ], LitGoogleMap.prototype, "version", void 0);
-__decorate$2([
+__decorate$1([
     property({ type: Object }),
-    __metadata$2("design:type", Object)
+    __metadata$1("design:type", Object)
 ], LitGoogleMap.prototype, "styles", void 0);
-__decorate$2([
+__decorate$1([
     property({ type: Number }),
-    __metadata$2("design:type", Number)
+    __metadata$1("design:type", Number)
 ], LitGoogleMap.prototype, "zoom", void 0);
-__decorate$2([
+__decorate$1([
     property({ type: Boolean, attribute: 'fit-to-markers' }),
-    __metadata$2("design:type", Boolean)
+    __metadata$1("design:type", Boolean)
 ], LitGoogleMap.prototype, "fitToMarkers", void 0);
-__decorate$2([
+__decorate$1([
     property({ type: String, attribute: 'map-type' }),
-    __metadata$2("design:type", String)
+    __metadata$1("design:type", String)
 ], LitGoogleMap.prototype, "mapType", void 0);
-__decorate$2([
+__decorate$1([
     property({ type: Number, attribute: 'center-latitude' }),
-    __metadata$2("design:type", Number)
+    __metadata$1("design:type", Number)
 ], LitGoogleMap.prototype, "centerLatitude", void 0);
-__decorate$2([
+__decorate$1([
     property({ type: Number, attribute: 'center-longitude' }),
-    __metadata$2("design:type", Number)
+    __metadata$1("design:type", Number)
 ], LitGoogleMap.prototype, "centerLongitude", void 0);
-__decorate$2([
+__decorate$1([
     property({ type: Boolean, attribute: 'set-center' }),
-    __metadata$2("design:type", Boolean)
+    __metadata$1("design:type", Boolean)
 ], LitGoogleMap.prototype, "setCenter", void 0);
-__decorate$2([
+__decorate$1([
     property({ type: Number, attribute: 'set-radius' }),
-    __metadata$2("design:type", Number)
+    __metadata$1("design:type", Number)
 ], LitGoogleMap.prototype, "setRadius", void 0);
-__decorate$2([
+__decorate$1([
     property({ type: String, attribute: 'radius-color' }),
-    __metadata$2("design:type", String)
+    __metadata$1("design:type", String)
 ], LitGoogleMap.prototype, "radiusColor", void 0);
-__decorate$2([
+__decorate$1([
     property({ type: String, attribute: 'radius-border-color' }),
-    __metadata$2("design:type", String)
+    __metadata$1("design:type", String)
 ], LitGoogleMap.prototype, "radiusBorderColor", void 0);
-__decorate$2([
+__decorate$1([
     property({ type: Number, attribute: 'radius-opacity' }),
-    __metadata$2("design:type", Number)
+    __metadata$1("design:type", Number)
 ], LitGoogleMap.prototype, "radiusOpacity", void 0);
-__decorate$2([
+__decorate$1([
     property({ type: Number, attribute: 'radius-border-opacity' }),
-    __metadata$2("design:type", Number)
+    __metadata$1("design:type", Number)
 ], LitGoogleMap.prototype, "radiusBorderOpacity", void 0);
-__decorate$2([
+__decorate$1([
     property({ type: Number, attribute: 'radius-border-weight' }),
-    __metadata$2("design:type", Number)
+    __metadata$1("design:type", Number)
 ], LitGoogleMap.prototype, "radiusBorderWeight", void 0);
-__decorate$2([
+__decorate$1([
     property({ type: String }),
-    __metadata$2("design:type", String)
+    __metadata$1("design:type", String)
 ], LitGoogleMap.prototype, "language", void 0);
-__decorate$2([
+__decorate$1([
     property({ type: String }),
-    __metadata$2("design:type", String)
+    __metadata$1("design:type", String)
 ], LitGoogleMap.prototype, "mapId", void 0);
-LitGoogleMap = __decorate$2([
+LitGoogleMap = __decorate$1([
     customElement('lit-google-map')
 ], LitGoogleMap);
 
@@ -721,13 +722,13 @@ class XSelection {
     }
 }
 
-var __decorate$3 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$3 = (undefined && undefined.__metadata) || function (k, v) {
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 let LitSelector = class LitSelector extends LitElement {
@@ -777,9 +778,9 @@ let LitSelector = class LitSelector extends LitElement {
         this.dispatchEvent(new CustomEvent("map-attrs-changed", { detail: {}, composed: true }));
     }
     updateItems() {
-        var _a, _b;
+        var _a;
         var slotElement = this.querySelector("slot");
-        this._items = (_b = (_a = slotElement) === null || _a === void 0 ? void 0 : _a.assignedNodes(), (_b !== null && _b !== void 0 ? _b : []));
+        this._items = (_a = slotElement === null || slotElement === void 0 ? void 0 : slotElement.assignedNodes()) !== null && _a !== void 0 ? _a : [];
     }
     addListener(eventName) {
         this.addEventListener(eventName, (event) => this.activateHandler(event));
@@ -834,19 +835,19 @@ let LitSelector = class LitSelector extends LitElement {
         return this._items ? this._items.indexOf(item) : -1;
     }
 };
-__decorate$3([
+__decorate([
     property({ type: String, attribute: 'activate-event' }),
-    __metadata$3("design:type", String)
+    __metadata("design:type", String)
 ], LitSelector.prototype, "activateEvent", void 0);
-__decorate$3([
+__decorate([
     property({ type: String, attribute: 'selected-attribute' }),
-    __metadata$3("design:type", String)
+    __metadata("design:type", String)
 ], LitSelector.prototype, "selectedAttribute", void 0);
-__decorate$3([
+__decorate([
     property({ type: Number, reflect: true }),
-    __metadata$3("design:type", Object)
+    __metadata("design:type", Object)
 ], LitSelector.prototype, "selected", void 0);
-LitSelector = __decorate$3([
+LitSelector = __decorate([
     customElement('lit-selector')
 ], LitSelector);
 

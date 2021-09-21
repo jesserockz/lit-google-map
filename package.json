@@ -1,6 +1,6 @@
 {
     "name": "@nelsongonzalez/lit-google-map",
-    "version": "1.0.6",
+    "version": "2.0.0",
     "description": "Google Maps web components based on LitElement",
     "license": "MIT",
     "author": {
@@ -19,7 +19,7 @@
         "bundle": "npm run build && rollup -c"
     },
     "dependencies": {
-        "lit-element": "~2.4.0"
+        "lit": "^2.0.0"
     },
     "devDependencies": {
         "@rollup/plugin-node-resolve": "^11.2.1",

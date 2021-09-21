@@ -1,4 +1,6 @@
-import {LitElement, customElement, property} from 'lit-element';
+import { LitElement } from 'lit';
+import { property, customElement } from 'lit/decorators.js';
+
 import {ScriptLoaderMap} from './script-loader-map';
 
 abstract class JsonpLibraryElement extends LitElement {
