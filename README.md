@@ -118,3 +118,10 @@ Markers can also have associated InfoWindow with html content:
 ## License
 
 MIT
+
+# Publish
+
+```shell
+git tag 2.0.1
+git push origin --tags
+```

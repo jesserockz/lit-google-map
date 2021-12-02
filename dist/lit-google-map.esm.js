@@ -440,14 +440,14 @@ let LitGoogleMap = class LitGoogleMap extends LitElement {
     }
     attachChildrenToMap(children) {
         if (this.map) {
-            for (var i = 0, child; child = children[i]; ++i) {
+            for (let child of children) {
                 child.changeMap(this.map);
             }
         }
     }
     removeChildrenFromMap(children) {
         if (this.map) {
-            for (var i = 0, child; child = children[i]; ++i) {
+            for (let child of children) {
                 child.removeMap();
             }
         }
@@ -507,7 +507,7 @@ let LitGoogleMap = class LitGoogleMap extends LitElement {
         }
         if (this.map && this.fitToMarkers && this.markers.length > 0) {
             var latLngBounds = new google.maps.LatLngBounds();
-            for (var i = 0, m; m = this.markers[i]; ++i) {
+            for (var m of this.markers) {
                 latLngBounds.extend(new google.maps.LatLng(m.latitude, m.longitude));
             }
             if (this.setCenter) {
@@ -532,7 +532,7 @@ let LitGoogleMap = class LitGoogleMap extends LitElement {
             }
             if (!this.setCenter) {
                 this.map.setCenter(latLngBounds.getCenter());
-                this.map.panToBounds;
+                this.map.panToBounds(latLngBounds);
                 return;
             }
             this.setCenterPoint();
@@ -564,9 +564,7 @@ let LitGoogleMap = class LitGoogleMap extends LitElement {
         this.circle.setMap(this.map);
         bounds.union(radius.getBounds());
         this.map.fitBounds(bounds);
-        this.map.panToBounds;
-    }
-    deselectMarker(event) {
+        this.map.panToBounds(bounds);
     }
     static get styles() {
         return css `
@@ -593,8 +591,7 @@ let LitGoogleMap = class LitGoogleMap extends LitElement {
                 set-center=${this.setCenter}
                 fit-to-markers=${this.fitToMarkers}
                 center-latitude=${this.centerLatitude}
-                center-longitude=${this.centerLongitude}
-                @google-map-marker-close=${(e) => this.deselectMarker(e)}>
+                center-longitude=${this.centerLongitude}>
                     <slot id="markers" name="markers"></slot>
             </lit-selector>
             <div id="map">

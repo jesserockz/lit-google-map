@@ -126,7 +126,7 @@ export class LitGoogleMap extends LitElement {
 
     attachChildrenToMap(children : Array<Node>) {
         if (this.map) {
-          for (var i = 0, child; child = children[i]; ++i) {
+          for (let child of children) {
             (child as LitGoogleMapMarker).changeMap(this.map);
           }
         }
@@ -134,9 +134,9 @@ export class LitGoogleMap extends LitElement {
 
     removeChildrenFromMap(children : Array<Node>) {
         if (this.map) {
-            for (var i = 0, child; child = children[i]; ++i) {
+            for (let child of children) {
                 (child as LitGoogleMapMarker).removeMap();
-              }
+            }
         }
     }
 
@@ -205,9 +205,9 @@ export class LitGoogleMap extends LitElement {
         }
         if (this.map && this.fitToMarkers && this.markers.length > 0) {
             var latLngBounds = new google.maps.LatLngBounds();
-            for (var i = 0, m; m = this.markers[i]; ++i) {
-                latLngBounds.extend(new google.maps.LatLng(m.latitude, m.longitude));
-            }
+            for (var m of this.markers) {
+                latLngBounds.extend(new google.maps.LatLng((m as LitGoogleMapMarker).latitude, (m as LitGoogleMapMarker).longitude));
+              }
 
             if (this.setCenter) {
                 latLngBounds.extend(new google.maps.LatLng(this.centerLatitude, this.centerLongitude))
@@ -232,7 +232,7 @@ export class LitGoogleMap extends LitElement {
             }
             if (!this.setCenter) {
                 this.map.setCenter(latLngBounds.getCenter());
-                this.map.panToBounds;
+                this.map.panToBounds(latLngBounds);
                 return;
             }
             this.setCenterPoint()
@@ -266,10 +266,7 @@ export class LitGoogleMap extends LitElement {
         this.circle.setMap(this.map);
         bounds.union(radius.getBounds());
         this.map.fitBounds(bounds);
-        this.map.panToBounds;
-    }
-
-    deselectMarker(event : Event) {
+        this.map.panToBounds(bounds);
     }
 
     static get styles() {
@@ -298,8 +295,7 @@ export class LitGoogleMap extends LitElement {
                 set-center=${this.setCenter}
                 fit-to-markers=${this.fitToMarkers}
                 center-latitude=${this.centerLatitude}
-                center-longitude=${this.centerLongitude}
-                @google-map-marker-close=${(e) => this.deselectMarker(e)}>
+                center-longitude=${this.centerLongitude}>
                     <slot id="markers" name="markers"></slot>
             </lit-selector>
             <div id="map">
