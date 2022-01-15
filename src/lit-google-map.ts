@@ -77,7 +77,7 @@ export class LitGoogleMap extends LitElement {
     @property({type : String})
     mapId: string = '';
 
-    @property({type: Boolean})
+    @property({type: Boolean, attribute: 'disable-default-ui'})
     disableDefaultUI: boolean = false;
 
     map : google.maps.Map = null;

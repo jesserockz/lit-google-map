@@ -710,7 +710,7 @@
         __metadata$1("design:type", String)
     ], exports.LitGoogleMap.prototype, "mapId", void 0);
     __decorate$1([
-        e({ type: Boolean }),
+        e({ type: Boolean, attribute: 'disable-default-ui' }),
         __metadata$1("design:type", Boolean)
     ], exports.LitGoogleMap.prototype, "disableDefaultUI", void 0);
     exports.LitGoogleMap = __decorate$1([
