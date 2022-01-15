@@ -77,6 +77,9 @@ export class LitGoogleMap extends LitElement {
     @property({type : String})
     mapId: string = '';
 
+    @property({type: Boolean})
+    disableDefaultUI: boolean = false;
+
     map : google.maps.Map = null;
 
     markers : Array<Node>;
@@ -110,7 +113,8 @@ export class LitGoogleMap extends LitElement {
             mapTypeId: this.mapType,
             // @ts-ignore
             styles: this.styles,
-            mapId: this.mapId
+            mapId: this.mapId,
+            disableDefaultUI: this.disableDefaultUI
         };
     }
 

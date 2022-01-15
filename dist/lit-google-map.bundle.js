@@ -446,6 +446,7 @@
             this.radiusBorderWeight = 2;
             this.language = '';
             this.mapId = '';
+            this.disableDefaultUI = false;
             this.map = null;
             this.markerObserverSet = false;
             this.attrObserverSet = false;
@@ -468,7 +469,8 @@
                 center: { lat: this.centerLatitude, lng: this.centerLongitude },
                 mapTypeId: this.mapType,
                 styles: this.styles,
-                mapId: this.mapId
+                mapId: this.mapId,
+                disableDefaultUI: this.disableDefaultUI
             };
         }
         mapApiLoaded() {
@@ -707,6 +709,10 @@
         e({ type: String }),
         __metadata$1("design:type", String)
     ], exports.LitGoogleMap.prototype, "mapId", void 0);
+    __decorate$1([
+        e({ type: Boolean }),
+        __metadata$1("design:type", Boolean)
+    ], exports.LitGoogleMap.prototype, "disableDefaultUI", void 0);
     exports.LitGoogleMap = __decorate$1([
         n('lit-google-map')
     ], exports.LitGoogleMap);

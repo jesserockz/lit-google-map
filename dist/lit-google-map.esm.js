@@ -406,6 +406,7 @@ let LitGoogleMap = class LitGoogleMap extends LitElement {
         this.radiusBorderWeight = 2;
         this.language = '';
         this.mapId = '';
+        this.disableDefaultUI = false;
         this.map = null;
         this.markerObserverSet = false;
         this.attrObserverSet = false;
@@ -428,7 +429,8 @@ let LitGoogleMap = class LitGoogleMap extends LitElement {
             center: { lat: this.centerLatitude, lng: this.centerLongitude },
             mapTypeId: this.mapType,
             styles: this.styles,
-            mapId: this.mapId
+            mapId: this.mapId,
+            disableDefaultUI: this.disableDefaultUI
         };
     }
     mapApiLoaded() {
@@ -667,6 +669,10 @@ __decorate$1([
     property({ type: String }),
     __metadata$1("design:type", String)
 ], LitGoogleMap.prototype, "mapId", void 0);
+__decorate$1([
+    property({ type: Boolean }),
+    __metadata$1("design:type", Boolean)
+], LitGoogleMap.prototype, "disableDefaultUI", void 0);
 LitGoogleMap = __decorate$1([
     customElement('lit-google-map')
 ], LitGoogleMap);
